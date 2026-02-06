@@ -81,26 +81,53 @@ object hw01 extends App:
   /* Exercises */
 
   def abs(n: Double): Double =
-    ???
+    if n < 0.0 then -n else n
 
   def ar(p: Int): Int =
-    ???
+    if p == 0 then 1
+    else if p < 0 then 1 + ar(-p)            
+    else if p < 10 then 1
+    else 1 + ar(p / 10)
 
   def rep(s: String, t: String, n: Int): String =
     require (n >= 0)
-    ???
+
+    @annotation.tailrec
+    def loop(k: Int, acc: String): String =
+      if k == 0 then acc
+      else if acc == "" then loop(k - 1, s)
+      else loop(k - 1, acc + t + s)
+
+    loop(n, "")
 
 
   def approx(c: Double, xn: Double): Double =
-    ???
+    val xn2 = xn * xn
+    val xn3 = xn2 * xn
+    xn - (xn3 - c) / (3.0 * xn2)
 
   def approxN(c: Double, xn: Double, n: Int): Double =
     require(n >= 0)
-    ???
+
+    @annotation.tailrec
+    def loop(k: Int, cur: Double): Double =
+      if k == 0 then cur
+      else loop(k - 1, approx(c, cur))
+
+    loop(n, xn)
 
   def approxErr(c: Double, xn: Double, epsilon: Double): Double =
     require (epsilon > 0)
-    ???
+    
+    def err(x: Double): Double =
+      abs(x - c / (x * x))
+
+    @annotation.tailrec
+    def loop(cur: Double): Double =
+      if err(cur) < epsilon then cur
+      else loop(approx(c, cur))
+
+    loop(xn)
 
   def root(c: Double): Double =
     approxErr(c, 1.0, 0.0001)
