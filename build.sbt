@@ -2,7 +2,7 @@ name := "hw01"
 
 version := "5.0"
 
-scalaVersion := "3.8.1"
+scalaVersion := "3..1"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.16"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % "test"
